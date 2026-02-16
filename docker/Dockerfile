@@ -74,7 +74,46 @@ RUN build-uboot \
       --outdir /out
 
 
+FROM --platform=$BUILDPLATFORM ${DEBIAN_IMAGE} AS builder-device-tree
+
+ARG TARGET_ARCH=arm64
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+      ca-certificates \
+      git \
+      make \
+      gcc \
+      gcc-aarch64-linux-gnu \
+      flex \
+      bison \
+      ncurses-base \
+      swig \
+      libssl-dev \
+      libgnutls28-dev \
+      device-tree-compiler \
+      python3 \
+      python3-dev \
+      python3-setuptools \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /work
+
+COPY docker/scripts/build-device-tree.sh /usr/local/bin/build-device-tree
+RUN chmod +x /usr/local/bin/build-device-tree
+
+COPY docker/device-tree/ /inputs/device-tree/
+
+RUN build-device-tree \
+      --repo https://source.denx.de/u-boot/u-boot.git \
+      --ref v2026.01 \
+      --srcdir /inputs/device-tree \
+      --outdir /out
+
+
 FROM scratch AS export
 
 COPY --from=builder-atf /out/ /atf/
 COPY --from=builder-uboot /out/ /u-boot/
+COPY --from=builder-device-tree /out/ /device-tree/

@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUT_DIR="${ROOT_DIR}/out"
 
-BUILDER_NAME="alpfactor"
+BUILDER_NAME="altfactor"
 TARGET_ARCH="${TARGET_ARCH:-arm64}"
 DEBIAN_IMAGE="${DEBIAN_IMAGE:-debian:trixie-slim}"
 
@@ -42,3 +42,4 @@ echo
 echo "Build complete. Artifacts:"
 echo "- ${OUT_DIR}/atf/bl31.bin"
 echo "- ${OUT_DIR}/u-boot/u-boot-sunxi-with-spl.bin"
+echo "- ${OUT_DIR}/device-tree/sun50i-a64-recore.dtb"

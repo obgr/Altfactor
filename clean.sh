@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUT_DIR="${ROOT_DIR}/out"
 
-BUILDER_NAME="alpfactor"
+BUILDER_NAME="altfactor"
 DOCKER_BIN="${DOCKER_BIN:-docker}"
 
 maybe_sudo_docker() {
