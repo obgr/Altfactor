@@ -1,0 +1,12 @@
+# .gitignore
+# Directories
+out/
+alpine/
+build/
+# images
+*.img.xz
+*.img
+*.iso
+# archives
+*.tar.xz
+*.tar.gz
